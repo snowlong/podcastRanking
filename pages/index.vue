@@ -1,39 +1,37 @@
 <template>
-  <div class="container">
+  <section class="container">
     <div>
-      <logo />
-      <h1 class="title">
-        podcastRanking
-      </h1>
-      <h2 class="subtitle">
-        podcast ranking viewer
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      <ul class="resultItems">
+        <li class="resultItem" v-for="item in results" :key="item.id">
+          <img :src="item['im:image'][0].label" class="imgStyle">
+          <dl class="dataStyle">
+            <dt>
+              <a :href="item.link.attributes.href">
+                Name: {{ item.title.label.slice(0,48) + "..." }}
+              </a>
+            </dt>
+          </dl>
+        </li>
+      </ul>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
 import Logo from '~/components/Logo.vue'
+import techRank from '~/static/json/techRank.json'
 
 export default {
   components: {
-    Logo
+    Logo,
+  },
+  data() {
+    return {
+      results: []
+    }
+  },
+  asyncData ({ params }) {
+    return { results: techRank.feed.entry }
   }
 }
 </script>
