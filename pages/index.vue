@@ -19,7 +19,7 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-import techRank from '~/static/json/techRank.json'
+// import axios from '@nuxtjs/axios'
 
 export default {
   components: {
@@ -30,7 +30,8 @@ export default {
       results: []
     }
   },
-  asyncData ({ params }) {
+  async asyncData ({ $axios }) {
+    const techRank = await $axios.$get('https://apple-ranking.s3-ap-northeast-1.amazonaws.com/current/ranking.json')
     return { results: techRank.feed.entry }
   }
 }
